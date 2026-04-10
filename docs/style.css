@@ -1,0 +1,252 @@
+/* Audio Effect Similarity Demo — stylesheet */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: #f5f6f8;
+  color: #222;
+  line-height: 1.6;
+}
+
+/* ── Page header ───────────────────────────────────────── */
+
+header {
+  background: #1a2340;
+  color: #fff;
+  padding: 2.5rem 1.5rem 2rem;
+  text-align: center;
+}
+
+header h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.4rem;
+}
+
+header .subtitle {
+  font-size: 1rem;
+  color: #a8b4d0;
+}
+
+/* ── Content wrapper ───────────────────────────────────── */
+
+.page-content {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem 4rem;
+}
+
+/* ── About section ─────────────────────────────────────── */
+
+.about {
+  background: #fff;
+  border: 1px solid #dde1ea;
+  border-radius: 8px;
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 2.5rem;
+}
+
+.about h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: #1a2340;
+}
+
+.about p { margin-bottom: 0.65rem; }
+.about p:last-child { margin-bottom: 0; }
+
+.formula {
+  background: #f0f2f7;
+  border-left: 3px solid #4a6fa5;
+  border-radius: 4px;
+  padding: 0.6rem 1rem;
+  font-family: 'Courier New', monospace;
+  font-size: 0.875rem;
+  color: #2a3a5c;
+  margin: 0.75rem 0;
+}
+
+/* ── Example cards ─────────────────────────────────────── */
+
+.examples-heading {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 1rem;
+}
+
+.example-card {
+  background: #fff;
+  border: 1px solid #dde1ea;
+  border-radius: 8px;
+  padding: 1.5rem 1.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.card-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  margin-bottom: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.card-number {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.card-title {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #1a2340;
+}
+
+.card-meta {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.1rem;
+}
+
+.tag {
+  font-size: 0.78rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 3px;
+  font-weight: 500;
+}
+
+.tag-effect { background: #e8f0fe; color: #2a5298; }
+.tag-device { background: #e6f4ea; color: #1e6b33; }
+.tag-paper  { background: #fef3e2; color: #7a4a00; }
+
+/* ── Audio players ─────────────────────────────────────── */
+
+.audio-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.audio-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.audio-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+audio {
+  width: 100%;
+  height: 36px;
+  border-radius: 4px;
+}
+
+/* ── Metric display ────────────────────────────────────── */
+
+.metric-row {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  border-top: 1px solid #eef0f4;
+  padding-top: 1rem;
+}
+
+.metric-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.metric-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.metric-value {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1a2340;
+}
+
+/* Rating bar */
+
+.rating-bar-wrap {
+  flex: 1;
+  min-width: 180px;
+}
+
+.rating-bar-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.25rem;
+}
+
+.rating-bar-track {
+  height: 12px;
+  border-radius: 6px;
+  background: #e8eaf0;
+  overflow: hidden;
+}
+
+.rating-bar-fill {
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.4s ease;
+}
+
+/* green → yellow → red via hue */
+.rating-bar-fill[data-rating="high"]   { background: #34a853; }
+.rating-bar-fill[data-rating="medium"] { background: #fbbc04; }
+.rating-bar-fill[data-rating="low"]    { background: #ea4335; }
+
+.rating-number {
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-top: 0.2rem;
+  color: #333;
+}
+
+/* ── Footer ────────────────────────────────────────────── */
+
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.85rem;
+  color: #888;
+  border-top: 1px solid #dde1ea;
+}
+
+footer a { color: #4a6fa5; text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+/* ── Responsive ────────────────────────────────────────── */
+
+@media (max-width: 580px) {
+  .audio-row { grid-template-columns: 1fr; }
+  .metric-row { gap: 0.75rem; }
+}

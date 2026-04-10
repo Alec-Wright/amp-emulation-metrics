@@ -1,0 +1,4 @@
+librosa
+torch
+tqdm
+fire

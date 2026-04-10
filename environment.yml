@@ -1,0 +1,14 @@
+name: MetricEvalRelease
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - numpy
+  - pandas
+  - librosa
+  - tqdm
+  - pip
+  - pip:
+    - frechet_audio_distance==0.3.1
+    - auraloss
+    - pyloudnorm

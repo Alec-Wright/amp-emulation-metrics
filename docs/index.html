@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Audio Effect Similarity Demo</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header>
+  <h1>Audio Effect Similarity Demo</h1>
+  <p class="subtitle">
+    Wright, A., Välimäki, V., Juvela, L. &mdash;
+    <em>Journal of the Acoustical Society of America</em>, 2024
+  </p>
+</header>
+
+<main class="page-content">
+
+  <!-- About section -->
+  <section class="about">
+    <h2>About the Metric</h2>
+    <p>
+      This demo accompanies a study on objective metrics for evaluating neural audio effect models.
+      Each example below shows a short clip processed through a neural audio effect emulator,
+      alongside the original input and the reference recording (the real hardware device).
+      Listen to all three and judge how similar the model output is to the reference — then
+      compare your impression to the metric score.
+    </p>
+    <p>
+      The metric used here is the <strong>MFCC-L1 distance</strong>: the L1 distance between
+      the Mel-Frequency Cepstral Coefficient (MFCC) sequences of the model output and the
+      reference. Smaller values indicate greater similarity.
+    </p>
+    <p>
+      A piecewise linear model (fitted to perceptual listening test data) converts the MFCC-L1
+      distance into a predicted perceptual rating on a 0&ndash;100 scale:
+    </p>
+    <div class="formula">
+      x = log<sub>10</sub>(MFCC-L1)<br>
+      rating = 100 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;if x &le; 0.464<br>
+      rating = 100 &minus; 69.4 &times; (x &minus; 0.464) &nbsp;otherwise
+    </div>
+    <p>
+      A rating of 100 means the metric predicts the output is perceptually indistinguishable
+      from the reference; lower values indicate increasing audible degradation.
+    </p>
+  </section>
+
+  <!-- Example cards injected by JS -->
+  <p class="examples-heading">Examples &mdash; ordered by increasing MFCC-L1</p>
+  <div id="examples-container"></div>
+
+</main>
+
+<footer>
+  <a href="https://github.com/Alec-Wright/MetricEvaluation" target="_blank" rel="noopener">
+    GitHub repository
+  </a>
+</footer>
+
+<script src="data.js"></script>
+<script>
+  function pwlm(mfcc) {
+    const d0 = 0.464, m = -69.4;
+    const x = Math.log10(mfcc);
+    return x <= d0 ? 100 : Math.max(0, 100 + m * (x - d0));
+  }
+
+  function ratingTier(r) {
+    if (r >= 80) return "high";
+    if (r >= 50) return "medium";
+    return "low";
+  }
+
+  function qualLabel(r) {
+    if (r >= 95) return "Perceptually similar";
+    if (r >= 75) return "Slight difference";
+    if (r >= 50) return "Moderate difference";
+    if (r >= 25) return "Large difference";
+    return "Very poor similarity";
+  }
+
+  function buildCard(ex, index) {
+    const rating = pwlm(ex.mfcc);
+    const tier = ratingTier(rating);
+    const ratingDisplay = rating.toFixed(1);
+    const barWidth = Math.max(2, rating).toFixed(1);
+
+    return `
+      <article class="example-card">
+        <div class="card-header">
+          <span class="card-number">Example ${index + 1}</span>
+          <span class="card-title">${ex.model} on ${ex.device}</span>
+        </div>
+        <div class="card-meta">
+          <span class="tag tag-effect">${ex.effectType}</span>
+          <span class="tag tag-device">${ex.device}</span>
+          <span class="tag tag-paper">${ex.paper}</span>
+        </div>
+
+        <div class="audio-row">
+          <div class="audio-block">
+            <span class="audio-label">Input</span>
+            <audio controls preload="none" src="${ex.audio.inp}"></audio>
+          </div>
+          <div class="audio-block">
+            <span class="audio-label">Reference</span>
+            <audio controls preload="none" src="${ex.audio.ref}"></audio>
+          </div>
+          <div class="audio-block">
+            <span class="audio-label">Model Output</span>
+            <audio controls preload="none" src="${ex.audio.out}"></audio>
+          </div>
+        </div>
+
+        <div class="metric-row">
+          <div class="metric-item">
+            <span class="metric-label">MFCC-L1</span>
+            <span class="metric-value">${ex.mfcc.toFixed(3)}</span>
+          </div>
+          <div class="rating-bar-wrap">
+            <div class="rating-bar-label">
+              <span>Predicted Perceptual Rating</span>
+              <span>${qualLabel(rating)}</span>
+            </div>
+            <div class="rating-bar-track">
+              <div class="rating-bar-fill"
+                   data-rating="${tier}"
+                   style="width: ${barWidth}%"></div>
+            </div>
+            <div class="rating-number">${ratingDisplay} / 100</div>
+          </div>
+        </div>
+      </article>
+    `;
+  }
+
+  const container = document.getElementById("examples-container");
+  container.innerHTML = EXAMPLES.map(buildCard).join("");
+</script>
+
+</body>
+</html>
