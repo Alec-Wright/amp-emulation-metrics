@@ -1,12 +1,12 @@
 import torch.nn as nn
 import torch
 import numpy as np
-import mir_eval
+#import mir_eval
 import scipy
 import auraloss
 import torch, torch.nn as nn, numpy as np
-from kymatio.torch import TimeFrequencyScattering
-from Utils import JTFSLoss
+#from kymatio.torch import TimeFrequencyScattering
+from utils import JTFSLoss
 import psyacloss.psyacloss_torch as psyacloss
 import librosa
 import scipy.spatial.distance

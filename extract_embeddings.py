@@ -77,10 +77,14 @@ if __name__ == '__main__':
                             raw_audios.append(out_clip)
 
                 embeddings = embedder.get_embeddings(raw_audios, 44100)
-                embeddings = np.stack(embeddings, axis=0)
 
                 if emb_name == 'encodec':
+                    embeddings = np.reshape(embeddings, [len(raw_audios), 128, -1])
                     embeddings = np.swapaxes(embeddings,2, 1)
+                else:
+                    embeddings = np.stack(embeddings, axis=0)
+
+
 
                 os.makedirs(join(args.audio_dir, fn, args.output_loc), exist_ok=True)
 

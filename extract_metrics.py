@@ -142,7 +142,7 @@ if __name__ == '__main__':
                        ['esr_basic', {'func_name': 'ESR'}],
                        ['mse', {'func_name': 'MSE'}],
                        ['mae', {'func_name': 'MAE'}],
-                       ['bss_eval', {'func_name': 'BSSEval'}],
+                       #['bss_eval', {'func_name': 'BSSEval'}],
                        ['specconv', {'func_name': 'AuraSTFT',
                                      'args': {'w_sc': 1.0, 'w_log_mag': 0.0, 'w_lin_mag': 0.0, 'w_phs': 0.0}}],
                        ['logstft', {'func_name': 'AuraSTFT',
@@ -153,9 +153,9 @@ if __name__ == '__main__':
                                    'args': {}}],
                        ['melstft', {'func_name': 'AuraMelSTFT',
                                    'args': {'sample_rate': 44100}}],
-                       ['JTFS', {'func_name': 'JTFS', 'fs': 44100, 'dur': 3}],
+                       #['JTFS', {'func_name': 'JTFS', 'fs': 44100, 'dur': 3}],
                        # Package for psychloss available at https://github.com/TUIlmenauAMS/Python-Audio-Coder/tree/master
-                       ['psychloss', {'func_name': 'psy_acu', 'fs': 44100}]
+                       #['psychloss', {'func_name': 'psy_acu', 'fs': 44100}]
     ]
 
 
